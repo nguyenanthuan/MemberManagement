@@ -1,0 +1,23 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name = "DTO.DTO_ThanhVien" table = "thanhvien">
+      
+      <meta attribute = "class-description">
+         This class contains the employee detail. 
+      </meta>
+      
+      <id name = "maTV" type = "int" column = "MaTV">
+         <generator class="native"/>
+      </id>
+      
+      <property name = "hoTen" column = "HoTen" type = "string"/>
+      <property name = "khoa" column = "Khoa" type = "string"/>
+      <property name = "nganh" column = "Nganh" type = "string"/>
+      <property name = "SDT" column = "SDT" type = "int"/>
+      
+   </class>
+</hibernate-mapping>
