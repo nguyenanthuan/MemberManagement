@@ -9,7 +9,7 @@
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/qlthanhvien?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf8</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password"></property>
+        <property name="hibernate.connection.password">1234</property>
       <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">4</property>
         <!-- Enable Hibernate's automatic session context management -->
@@ -21,5 +21,7 @@
         <!-- Entity mapping -->
         <!-- <mapping class="demopl.DAL.Course" /> -->
         <mapping resource = "thanhvien.hbm.xml"/>
+        <mapping class="DTO.DTO_ThietBi" />
+        <mapping class="DTO.DTO_LoaiThietBi" />
     </session-factory>
 </hibernate-configuration>
