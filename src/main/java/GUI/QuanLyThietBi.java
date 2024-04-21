@@ -401,10 +401,7 @@ public class QuanLyThietBi extends javax.swing.JFrame {
         }
         }
                 }
-        
-        
-        
-        
+   
     }//GEN-LAST:event_updatebtnActionPerformed
 
     private void deletebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebtnActionPerformed
@@ -492,7 +489,8 @@ public class QuanLyThietBi extends javax.swing.JFrame {
         {
        JOptionPane.showMessageDialog(this,"Bạn đã chọn file "+excelFile);
             try {
-                readFileExcel();
+                String status=readFileExcel();
+                JOptionPane.showMessageDialog(rootPane, status);
             } catch (IOException ex) {
                 Logger.getLogger(QuanLyThietBi.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -621,32 +619,50 @@ public class QuanLyThietBi extends javax.swing.JFrame {
         XSSFWorkbook wb = new XSSFWorkbook(fis);   
         XSSFSheet sheet = wb.getSheetAt(0);     //creating a Sheet object to retrieve object  
         Row row=sheet.getRow(0);
-        Iterator<Cell> cellIterator = row.cellIterator(); 
+        try
+        {
+        Iterator<Cell> cellIterator = row.cellIterator();
         while (cellIterator.hasNext())   
         {  
         Cell cell = cellIterator.next(); 
         countColumn=countColumn+1;
         }
+        }
+        catch (NullPointerException e)
+        {
+            return 0;
+        }
         return countColumn;
     }
-    public void readFileExcel() throws FileNotFoundException, IOException
+    public String readFileExcel() throws FileNotFoundException, IOException
     {
             try  
             {  
                 int row= this.getRowCount();
-                
-                
+                int column=this.getColumnCount();
+                if ((column!=3)||(row==0))
+                    return "File excel không đúng định dạng !";
                    for (int i=1;i<row;i++)
                    {     
-                       thietbiBLL.addEquipmentExcel(Integer.valueOf(readCellData(i,0)),readCellData(i,1), this.readCellData(i,2));
+                       String maTB=readCellData(i,0);
+                       String tenTB=readCellData(i,1);
+                       String motaTB=readCellData(i,2);
+                       if ((maTB==null)||(tenTB==null)||motaTB==null)
+                       {
+                           return "File excel không đúng định dạng !";
+                       }
+                       else
+                       {
+                       thietbiBLL.addEquipmentExcel(Integer.valueOf(maTB),tenTB, motaTB);
+                       }
                    }
             }  
             catch(Exception e)  
             {  
             e.printStackTrace();  
             }  
-            JOptionPane.showMessageDialog(rootPane,"Nhập dữ liệu từ file excel thành công !");
             loadEquipment();
+            return "Nhập dữ liệu từ file excel thành công !";
     }  
     public String readCellData(int vRow, int vColumn)  
 {  
@@ -677,6 +693,10 @@ public class QuanLyThietBi extends javax.swing.JFrame {
         catch (IllegalStateException e)
                 {
                 value=String.valueOf((int) cell.getNumericCellValue());
+                }
+        catch (NullPointerException el)
+                {
+                   return null;
                 }
         return value;               //returns the cell value  
 }  

@@ -103,7 +103,11 @@ public class DAL_ThietBi {
             
             if (se!=null)
             {
-                return -1;
+                int minidLTB = loaithietbi*100000;
+                int maxidLTB = minidLTB +99999;
+                 idEquipment=(int) session.createQuery("SELECT MAX(u.maTB) FROM DTO_ThietBi u WHERE u.maTB BETWEEN :minidLTB AND :maxidLTB ").setParameter("minidLTB",minidLTB).setParameter("maxidLTB", maxidLTB).getSingleResult();
+              if (idEquipment < maxidLTB)
+                    idEquipment = idEquipment + 1;
             }
             else
             {
